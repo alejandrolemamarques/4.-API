@@ -170,7 +170,7 @@ main::before {
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  background: linear-gradient(135deg, #cf5d98 0%, #d6006e 100%);
 }
 
 h1 {
@@ -245,16 +245,18 @@ h1 .emoji {
 }
 
 button {
-  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  background: linear-gradient(135deg, #cf5d98 0%, #d6006e 100%);
   color: white;
-  border: none;
+  border: 1px solid transparent;
   padding: 1rem 2.5rem;
   border-radius: 12px;
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
-  -webkit-transition: all 0.3s ease;
-  transition: all 0.3s ease;
+  -webkit-transition: -webkit-transform 0.3s ease, -webkit-box-shadow 0.3s ease;
+  transition: -webkit-transform 0.3s ease, -webkit-box-shadow 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, -webkit-transform 0.3s ease, -webkit-box-shadow 0.3s ease;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -279,6 +281,12 @@ button .button-icon {
   transition: transform 0.3s ease, -webkit-transform 0.3s ease;
 }
 
+button.selected {
+  background: white;
+  color: #1e293b;
+  border: 1px solid #1e293b;
+}
+
 button:hover {
   -webkit-transform: translateY(-2px);
           transform: translateY(-2px);
@@ -298,6 +306,19 @@ button:active {
           box-shadow: 0 2px 8px rgba(79, 70, 229, 0.3);
 }
 
+.report-jokes {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 1rem;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
 .loading-dots {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -315,7 +336,7 @@ button:active {
 .loading-dots span {
   width: 8px;
   height: 8px;
-  background-color: #4f46e5;
+  background-color: #d6006e;
   border-radius: 50%;
   -webkit-animation: bounce 0.5s infinite alternate;
           animation: bounce 0.5s infinite alternate;
@@ -442,5 +463,89 @@ button:active {
 .background-emoji:nth-child(4)::before {
   -webkit-animation-delay: -6s;
           animation-delay: -6s;
+}
+
+.weather-display {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background: white;
+  padding: 12px 16px;
+  border-radius: 12px;
+  -webkit-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  z-index: 1000;
+  min-width: 180px;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  -webkit-animation: fadeIn 0.3s ease-out;
+          animation: fadeIn 0.3s ease-out;
+}
+
+.weather-display .weather-info {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 12px;
+}
+
+.weather-display .weather-icon {
+  width: 48px;
+  height: 48px;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
+.weather-display .weather-details {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 2px;
+}
+
+.weather-display .weather-details .temperature {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1e293b;
+  line-height: 1.2;
+}
+
+.weather-display .weather-details .condition {
+  font-size: 0.9rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.weather-display .weather-details .details {
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+@media (max-width: 640px) {
+  .weather-display {
+    top: 12px;
+    left: 12px;
+    padding: 10px;
+    min-width: 160px;
+  }
+  .weather-display .weather-icon {
+    width: 40px;
+    height: 40px;
+  }
+  .weather-display .weather-details .temperature {
+    font-size: 1.1rem;
+  }
+  .weather-display .weather-details .condition {
+    font-size: 0.85rem;
+  }
 }
 /*# sourceMappingURL=style.css.map */

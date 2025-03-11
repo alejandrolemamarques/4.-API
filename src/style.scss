@@ -1,11 +1,9 @@
 // Variables
-$primary-gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+$primary-gradient: linear-gradient(135deg, #cf5d98 0%, #d6006e 100%);
 $secondary-gradient: linear-gradient(135deg, #f5f7fa 0%, #e4e7eb 100%);
 $text-color: #1e293b;
 $shadow-color: rgba(0, 0, 0, 0.08);
-$accent-color: #4f46e5;
-$error-color: #ef4444;
-$success-color: #10b981;
+$accent-color: #d6006e;
 
 // Animations
 @keyframes fadeIn {
@@ -172,13 +170,15 @@ h1 {
 button {
   background: $primary-gradient;
   color: white;
-  border: none;
+  border: 1px solid transparent;
   padding: 1rem 2.5rem;
   border-radius: 12px;
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -194,6 +194,12 @@ button {
     transition: transform 0.3s ease;
   }
 
+  &.selected {
+    background: white;
+    color: $text-color;
+    border: 1px solid $text-color;
+  }
+
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
@@ -207,6 +213,13 @@ button {
     transform: translateY(0);
     box-shadow: 0 2px 8px rgba(79, 70, 229, 0.3);
   }
+}
+
+.report-jokes {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
 }
 
 // Loading state
@@ -322,6 +335,81 @@ button {
     animation-delay: -6s;
     &::before {
       animation-delay: -6s;
+    }
+  }
+}
+
+.weather-display {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background: white;
+  padding: 12px 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px $shadow-color;
+  z-index: 1000;
+  min-width: 180px;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  animation: fadeIn 0.3s ease-out;
+
+  .weather-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .weather-icon {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+  }
+
+  .weather-details {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    .temperature {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: $text-color;
+      line-height: 1.2;
+    }
+
+    .condition {
+      font-size: 0.9rem;
+      color: #64748b;
+      font-weight: 500;
+    }
+
+    .details {
+      font-size: 0.8rem;
+      color: #94a3b8;
+    }
+  }
+
+  @media (max-width: 640px) {
+    top: 12px;
+    left: 12px;
+    padding: 10px;
+    min-width: 160px;
+
+    .weather-icon {
+      width: 40px;
+      height: 40px;
+    }
+
+    .weather-details {
+      .temperature {
+        font-size: 1.1rem;
+      }
+
+      .condition {
+        font-size: 0.85rem;
+      }
     }
   }
 }

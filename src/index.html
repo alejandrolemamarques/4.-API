@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Random Joke Generator</title>
     <link rel="stylesheet" href="../dist/style.css" />
-    <script src="../dist/index.js" defer></script>
+    <script src="../dist/index.js" type="module"></script>
   </head>
   <body>
     <div class="background-emoji" aria-hidden="true"></div>
@@ -18,12 +18,17 @@
         Get ready to laugh with our random joke generator!
       </p>
       <div class="joke-container">
-        <button id="joke-button" onclick="getJoke()">
+        <button id="joke-button">
           <span class="button-text">Generate Joke</span>
           <span class="button-icon">🎲</span>
         </button>
         <div class="joke-display">
           <p id="joke">Your joke will appear here...</p>
+        </div>
+        <div class="report-jokes">
+          <button id="report-button-1" class="report-button">👎</button>
+          <button id="report-button-2" class="report-button">👍</button>
+          <button id="report-button-3" class="report-button">🎉</button>
         </div>
       </div>
     </main>
