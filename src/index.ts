@@ -6,27 +6,67 @@ interface JokeReport {
   date: string; // ISO format e.g. "2024-01-23T14:56:23.744Z"
 }
 
+// Define interfaces for API responses
+interface DadJokeResponse {
+  id: string;
+  joke: string;
+  status: number;
+}
+
+interface JokeAPIResponse {
+  type: 'single' | 'twopart';
+  joke?: string;
+  setup?: string;
+  delivery?: string;
+  id: number;
+  error?: boolean;
+}
+
+// Unified joke data structure
+interface JokeData {
+  joke: string;
+}
+
 // Array to store all reported jokes and their ratings
 const reportJokes: JokeReport[] = [];
 
 /**
- * Fetches a random dad joke from the icanhazdadjoke API
- * @returns Promise containing the joke data
+ * Fetches a random dad joke from either icanhazdadjoke or jokeapi
+ * @returns Promise containing the joke data or null if there's an error
  */
-const getJoke = async () => {
+const getJoke = async (): Promise<JokeData | null> => {
   try {
-    const response = await fetch('https://icanhazdadjoke.com/', {
-      headers: {
-        Accept: 'application/json',
-        'User-Agent':
-          'joke-generator (https://github.com/alejandrolemamarques/4.-API.git)',
-      },
-    });
+    if (Math.random() < 0.5) {
+      // Fetch from icanhazdadjoke API
+      const response = await fetch('https://icanhazdadjoke.com/', {
+        headers: {
+          Accept: 'application/json',
+          'User-Agent':
+            'joke-generator (https://github.com/alejandrolemamarques/4.-API.git)',
+        },
+      });
+      const data = (await response.json()) as DadJokeResponse;
+      console.log('icanhazdadjoke');
+      return { joke: data.joke };
+    } else {
+      // Fetch from jokeapi
+      const response = await fetch('https://v2.jokeapi.dev/joke/Programming');
+      const data = (await response.json()) as JokeAPIResponse;
+      console.log('jokeapi');
 
-    const data = await response.json();
-    return data;
+      if (data.type === 'single' && data.joke) {
+        return { joke: data.joke };
+      } else if (data.type === 'twopart' && data.setup && data.delivery) {
+        return {
+          joke: `${data.setup}\n${data.delivery}`,
+        };
+      }
+
+      throw new Error('Unexpected joke format from JokeAPI');
+    }
   } catch (error) {
     console.error('Error fetching joke:', error);
+    return null;
   }
 };
 
@@ -43,6 +83,11 @@ const displayNewJoke = async () => {
     const jokeElement = document.getElementById('joke');
     if (!jokeElement) {
       throw new Error('Joke element not found');
+    }
+
+    if (!joke) {
+      jokeElement.textContent = 'Failed to fetch a joke. Please try again.';
+      return;
     }
 
     jokeElement.textContent = joke.joke;

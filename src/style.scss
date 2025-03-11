@@ -160,6 +160,7 @@ h1 {
     line-height: 1.6;
     color: $text-color;
     transition: opacity 0.3s ease;
+    white-space: pre-line;
 
     &.loading {
       opacity: 0.6;
@@ -277,6 +278,7 @@ button {
 
     #joke {
       font-size: 1.1rem;
+      white-space: pre-line;
     }
   }
 
@@ -339,6 +341,7 @@ button {
   }
 }
 
+// Weather display
 .weather-display {
   position: fixed;
   top: 20px;

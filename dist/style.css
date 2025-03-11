@@ -238,6 +238,7 @@ h1 .emoji {
   color: #1e293b;
   -webkit-transition: opacity 0.3s ease;
   transition: opacity 0.3s ease;
+  white-space: pre-line;
 }
 
 .joke-display #joke.loading {
@@ -392,6 +393,7 @@ button:active {
   }
   .joke-display #joke {
     font-size: 1.1rem;
+    white-space: pre-line;
   }
   button {
     padding: 0.875rem 2rem;
