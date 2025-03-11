@@ -13,13 +13,13 @@ const getJoke = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const response = yield fetch('https://icanhazdadjoke.com/', {
             headers: {
-                Accept: 'text/plain',
+                Accept: 'application/json',
                 'User-Agent': 'joke-generator (https://github.com/alejandrolemamarques/4.-API.git)',
             },
         });
-        const data = yield response.text();
+        const data = yield response.json();
         if (joke) {
-            joke.textContent = data;
+            joke.textContent = data.joke;
             console.log(data);
         }
     }

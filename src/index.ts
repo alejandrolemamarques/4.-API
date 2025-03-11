@@ -4,16 +4,16 @@ const getJoke = async () => {
   try {
     const response = await fetch('https://icanhazdadjoke.com/', {
       headers: {
-        Accept: 'text/plain',
+        Accept: 'application/json',
         'User-Agent':
           'joke-generator (https://github.com/alejandrolemamarques/4.-API.git)',
       },
     });
 
-    const data = await response.text();
+    const data = await response.json();
 
     if (joke) {
-      joke.textContent = data;
+      joke.textContent = data.joke;
       console.log(data);
     }
   } catch (error) {
