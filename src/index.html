@@ -1,18 +1,31 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="../dist/style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Random Joke Generator</title>
+    <link rel="stylesheet" href="../dist/style.css" />
     <script src="../dist/index.js" defer></script>
-</head>
-<body>
+  </head>
+  <body>
+    <div class="background-emoji" aria-hidden="true"></div>
+    <div class="background-emoji" aria-hidden="true"></div>
+    <div class="background-emoji" aria-hidden="true"></div>
+    <div class="background-emoji" aria-hidden="true"></div>
     <main>
-        <h1>Jokes Generator</h1>
-        <p>Click the button below to generate a random joke</p>
-        <button id="joke-button" onclick="getJoke()">Generate Joke</button>
-        <p id="joke"></p>
+      <h1>😄 Jokes Generator</h1>
+      <p class="description">
+        Get ready to laugh with our random joke generator!
+      </p>
+      <div class="joke-container">
+        <button id="joke-button" onclick="getJoke()">
+          <span class="button-text">Generate Joke</span>
+          <span class="button-icon">🎲</span>
+        </button>
+        <div class="joke-display">
+          <p id="joke">Your joke will appear here...</p>
+        </div>
+      </div>
     </main>
-</body>
+  </body>
 </html>
