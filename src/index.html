@@ -5,9 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="../dist/style.css">
-    <script src="../dist/index.js"></script>
+    <script src="../dist/index.js" defer></script>
 </head>
 <body>
-    <h1>Hello World</h1>
+    <main>
+        <h1>Jokes Generator</h1>
+        <p>Click the button below to generate a random joke</p>
+        <button id="joke-button" onclick="getJoke()">Generate Joke</button>
+        <p id="joke"></p>
+    </main>
 </body>
 </html>

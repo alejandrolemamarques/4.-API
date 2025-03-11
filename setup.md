@@ -174,6 +174,7 @@ Add these useful scripts to package.json:
 "scripts": {
     "start": "node dist/index.js",     // Runs the compiled application in production
     "build": "tsc",                    // Compiles TypeScript to JavaScript
+    "build:watch": "tsc --watch",      // Compiles TypeScript to JavaScript and watches for changes
     "dev": "nodemon --exec ts-node src/index.ts",  // Runs with auto-reload for development
     "lint": "eslint src/**/*.ts",      // Checks code for quality issues
     "lint:fix": "eslint src/**/*.ts --fix"  // Automatically fixes linting issues when possible
