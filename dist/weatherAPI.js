@@ -30,12 +30,14 @@ async function displayWeather() {
     const temp = weatherData.current.temp_c;
     const condition = weatherData.current.condition.text;
     const icon = weatherData.current.condition.icon;
+    const city = weatherData.location.name;
     weatherElement.innerHTML = `
     <div class="weather-info">
       <img src="${icon}" alt="${condition}" class="weather-icon" />
       <div class="weather-details">
         <span class="temperature">${temp}°C</span>
         <span class="condition">${condition}</span>
+        <span class="city">${city}</span>
       </div>
     </div>
   `;

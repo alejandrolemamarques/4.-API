@@ -1,45 +1,35 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 // Array to store all reported jokes and their ratings
 const reportJokes = [];
 /**
  * Fetches a random dad joke from the icanhazdadjoke API
  * @returns Promise containing the joke data
  */
-const getJoke = () => __awaiter(void 0, void 0, void 0, function* () {
+const getJoke = async () => {
     try {
-        const response = yield fetch('https://icanhazdadjoke.com/', {
+        const response = await fetch('https://icanhazdadjoke.com/', {
             headers: {
                 Accept: 'application/json',
                 'User-Agent': 'joke-generator (https://github.com/alejandrolemamarques/4.-API.git)',
             },
         });
-        const data = yield response.json();
+        const data = await response.json();
         return data;
     }
     catch (error) {
         console.error('Error fetching joke:', error);
     }
-});
+};
 /**
  * Displays a new joke on the page and handles the UI state for report buttons
  * - Fetches and displays a new joke
  * - Resets all report button states
  * - If joke was previously rated, shows the previous rating
  */
-const displayNewJoke = () => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
+const displayNewJoke = async () => {
     try {
         // Fetch and display new joke
-        const joke = yield getJoke();
+        const joke = await getJoke();
         const jokeElement = document.getElementById('joke');
         if (!jokeElement) {
             throw new Error('Joke element not found');
@@ -53,7 +43,7 @@ const displayNewJoke = () => __awaiter(void 0, void 0, void 0, function* () {
         });
         // If this joke was previously rated, highlight the corresponding button
         if (checkIfJokeAlreadyReported(joke.joke)) {
-            const score = (_a = reportJokes.find((report) => report.joke === joke.joke)) === null || _a === void 0 ? void 0 : _a.score;
+            const score = reportJokes.find((report) => report.joke === joke.joke)?.score;
             const reportButton = document.getElementById(`report-button-${score}`);
             if (reportButton) {
                 reportButton.classList.add('selected');
@@ -63,7 +53,7 @@ const displayNewJoke = () => __awaiter(void 0, void 0, void 0, function* () {
     catch (error) {
         console.error('Error displaying joke:', error);
     }
-});
+};
 /**
  * Checks if a joke has been previously reported
  * @param joke - The joke text to check
