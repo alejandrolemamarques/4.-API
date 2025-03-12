@@ -30,11 +30,47 @@ interface JokeData {
 // Array to store all reported jokes and their ratings
 const reportJokes: JokeReport[] = [];
 
+// Function to trigger confetti
+const triggerConfetti = () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const confetti = (window as any).confetti;
+  if (confetti) {
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: { y: 0.6 },
+      colors: ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff'],
+    });
+  }
+};
+
+// Function to show loading state
+const showLoading = () => {
+  const jokeElement = document.getElementById('joke');
+  const loadingAnimation = document.getElementById('loading-animation');
+  if (jokeElement && loadingAnimation) {
+    jokeElement.style.opacity = '0';
+    loadingAnimation.style.display = 'block';
+  }
+};
+
+// Function to hide loading state
+const hideLoading = () => {
+  const jokeElement = document.getElementById('joke');
+  const loadingAnimation = document.getElementById('loading-animation');
+  if (jokeElement && loadingAnimation) {
+    jokeElement.style.opacity = '1';
+    loadingAnimation.style.display = 'none';
+  }
+};
+
 /**
  * Fetches a random dad joke from either icanhazdadjoke or jokeapi
  * @returns Promise containing the joke data or null if there's an error
  */
 const getJoke = async (): Promise<JokeData | null> => {
+  showLoading();
+  await new Promise((resolve) => setTimeout(resolve, 500));
   try {
     if (Math.random() < 0.5) {
       // Fetch from icanhazdadjoke API
@@ -67,6 +103,8 @@ const getJoke = async (): Promise<JokeData | null> => {
   } catch (error) {
     console.error('Error fetching joke:', error);
     return null;
+  } finally {
+    hideLoading();
   }
 };
 
@@ -78,7 +116,12 @@ const getJoke = async (): Promise<JokeData | null> => {
  */
 const displayNewJoke = async () => {
   try {
-    // Fetch and display new joke
+    const jokeDisplay = document.getElementById('joke-display');
+    if (jokeDisplay) {
+      jokeDisplay.classList.add('shake');
+      setTimeout(() => jokeDisplay.classList.remove('shake'), 500);
+    }
+
     const joke = await getJoke();
     const jokeElement = document.getElementById('joke');
     if (!jokeElement) {
@@ -184,7 +227,11 @@ const reportJoke = (score: 1 | 2 | 3) => {
   // Highlight the selected rating button
   reportButton.classList.add('selected');
 
-  // Log updated ratings array
+  // Trigger animations based on score
+  if (score === 3) {
+    triggerConfetti();
+  }
+
   console.log(reportJokes);
 };
 

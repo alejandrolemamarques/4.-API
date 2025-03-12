@@ -4,9 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Random Joke Generator</title>
-    <link rel="stylesheet" href="../dist/style.css" />
-    <script src="../dist/index.js" type="module"></script>
-    <script src="../dist/weatherAPI.js" type="module"></script>
+    <link rel="stylesheet" href="./dist/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="./dist/index.js" type="module"></script>
+    <script src="./dist/weatherAPI.js" type="module"></script>
   </head>
   <body>
     <div id="weather-display" class="weather-display"></div>
@@ -14,6 +15,7 @@
     <div class="background-emoji" aria-hidden="true"></div>
     <div class="background-emoji" aria-hidden="true"></div>
     <div class="background-emoji" aria-hidden="true"></div>
+    <div class="confetti-container" id="confetti-container"></div>
     <main>
       <h1>😄 Jokes Generator</h1>
       <p class="description">
@@ -24,7 +26,9 @@
           <span class="button-text">Generate Joke</span>
           <span class="button-icon">🎲</span>
         </button>
-        <div class="joke-display">
+        <div class="joke-display" id="joke-display">
+          <div class="loading-animation" id="loading-animation">
+          </div>
           <p id="joke">Your joke will appear here...</p>
         </div>
         <div class="report-jokes">

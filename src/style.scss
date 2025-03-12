@@ -59,6 +59,18 @@ $accent-color: #d6006e;
   }
 }
 
+@keyframes pop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 // Reset and base styles
 
 * {
@@ -83,7 +95,7 @@ body {
   align-items: center;
   padding: 1rem;
   position: relative;
-  overflow: hidden;
+  overflow: auto;
 }
 
 main {
@@ -143,6 +155,7 @@ h1 {
 
 .joke-display {
   background: $secondary-gradient;
+  position: relative;
   padding: 2rem;
   border-radius: 16px;
   width: 100%;
@@ -150,8 +163,31 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
+  transition: all 0.5s ease;
   border: 1px solid rgba(0, 0, 0, 0.05);
+
+  & .loading-animation {
+    position: absolute;
+    // transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+
+    &::before {
+      content: '🤣';
+      font-size: 2rem;
+      position: absolute;
+      animation: spin 0.5s infinite linear;
+      top: 5px;
+      left: 7px;
+    }
+
+    &.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+  }
 
   #joke {
     margin: 0;
@@ -165,6 +201,10 @@ h1 {
     &.loading {
       opacity: 0.6;
     }
+  }
+
+  &.shake {
+    animation: shake 3s ease-in-out 0s;
   }
 }
 
@@ -223,30 +263,6 @@ button {
   align-items: center;
 }
 
-// Loading state
-.loading-dots {
-  display: flex;
-  gap: 0.5rem;
-  justify-content: center;
-  align-items: center;
-  height: 24px;
-
-  span {
-    width: 8px;
-    height: 8px;
-    background-color: $accent-color;
-    border-radius: 50%;
-    animation: bounce 0.5s infinite alternate;
-
-    &:nth-child(2) {
-      animation-delay: 0.2s;
-    }
-    &:nth-child(3) {
-      animation-delay: 0.4s;
-    }
-  }
-}
-
 @keyframes bounce {
   from {
     transform: translateY(0);
@@ -278,13 +294,43 @@ button {
 
     #joke {
       font-size: 1.1rem;
-      white-space: pre-line;
     }
   }
 
   button {
     padding: 0.875rem 2rem;
     font-size: 1rem;
+  }
+}
+
+/* Add landscape mode specific styles */
+@media (max-height: 500px) and (orientation: landscape) {
+  body {
+    align-items: flex-start;
+    padding: 0.5rem;
+  }
+
+  main {
+    margin: 0.5rem auto;
+    padding: 1.5rem;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .description {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .joke-container {
+    gap: 1.5rem;
+  }
+
+  .report-jokes {
+    flex-wrap: wrap;
   }
 }
 
@@ -414,5 +460,50 @@ button {
         font-size: 0.85rem;
       }
     }
+  }
+}
+
+.report-button {
+  font-size: 1.5rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+
+  &:hover {
+    transform: scale(1.2);
+  }
+
+  &.selected {
+    animation: pop 0.5s ease;
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 25%;
+      width: 50%;
+      height: 3px;
+      background: currentColor;
+      border-radius: 3px;
+    }
+  }
+}
+
+// Confetti container
+.confetti-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
 }
